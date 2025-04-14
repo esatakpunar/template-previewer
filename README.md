@@ -58,3 +58,20 @@ The page will be divided into two main sections vertically:
   "template": "HTML template string",
   "dataSource": "JSON data string"
 }
+```
+
+### Response Format:
+```json
+{
+  "template": "HTML template string",
+  "dataSource": "JSON data string"
+}
+```
+
+## User Experience
+- Loading indicators for loading states
+- Toast notifications for error messages
+- User-friendly error management
+- Responsive design for mobile compatibility
+- Dark/Light mode toggle
+- Detailed error messages and notifications
