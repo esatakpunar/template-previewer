@@ -1,107 +1,60 @@
-HTML and PDF Preview PRD
-Project Objective
+# HTML and PDF Preview PRD
+
+## Project Objective
 This project is a web application that allows users to input HTML templates and data sources and preview the results in both HTML and PDF formats.
 
-User Interface Requirements
-Main Page Layout
+## User Interface Requirements
+
+### Main Page Layout
 The page will be divided into two main sections vertically:
+- **Left Panel**
+- **Right Panel**
 
-Left Panel
+### Left Panel Features
+1. **HTML Template Input Field**
+   - Large text editor
+   - Syntax highlighting support
+   - Highlighting of template variables
 
-Right Panel
+2. **Data Source Input Field**
+   - Data entry in JSON format
+   - Syntax highlighting support
+   - JSON validation
 
-Left Panel Features
-HTML Template Input Field
+3. **Control Buttons**
+   - "Run" button
+   - Sends the template and data source to the backend
 
-Large text editor
+### Right Panel Features
+1. **Tabbed View**
+   - HTML Preview tab
+   - PDF Preview tab
 
-Syntax highlighting support
+2. **HTML Preview**
+   - Combined result of the template and data source
+   - Responsive view
 
-Highlighting of template variables
+3. **PDF Preview**
+   - Preview of the PDF document
+   - Zoom in/out features
 
-Data Source Input Field
+## Technical Requirements
+- **Frontend Framework**: Vue.js
+- **UI Library**: Tailwind CSS
+- **Code Editor**: Monaco Editor
+- **PDF Viewer**: PDF.js
+- Responsive design
+- Modern and user-friendly interface
+- Dark/Light mode support
+- Error notification system
+- Detailed error handling and display
 
-Data entry in JSON format
-
-Syntax highlighting support
-
-JSON validation
-
-Control Buttons
-
-"Run" button
-
-Sends the template and data source to the backend
-
-Right Panel Features
-Tabbed View
-
-HTML Preview tab
-
-PDF Preview tab
-
-HTML Preview
-
-Combined result of the template and data source
-
-Responsive view
-
-PDF Preview
-
-Preview of the PDF document
-
-Zoom in/out features
-
-Technical Requirements
-Frontend Framework: Vue.js
-
-UI Library: Tailwind CSS
-
-Code Editor: Monaco Editor
-
-PDF Viewer: PDF.js
-
-Responsive design
-
-Modern and user-friendly interface
-
-Dark/Light mode support
-
-Error notification system
-
-Detailed error handling and display
-
-Backend Integration
-API Endpoint: /report/pdfTest
-
-Request Format:
-
-json
-Copy
-Edit
+## Backend Integration
+- **API Endpoint**: `/report/pdfTest`
+  
+### Request Format:
+```json
 {
   "template": "HTML template string",
   "dataSource": "JSON data string"
 }
-Response Format:
-
-json
-Copy
-Edit
-{
-  "htmlContent": "Rendered HTML string",
-  "pdfContent": "PDF byte array"
-}
-User Experience
-Loading indicators for loading states
-
-Toast notifications for error messages
-
-User-friendly error management
-
-Responsive design for mobile compatibility
-
-Dark/Light mode toggle
-
-Detailed error messages and notifications
-
