@@ -6,6 +6,7 @@ import 'splitpanes/dist/splitpanes.css'
 
 const template = ref('')
 const dataSource = ref('{}')
+const salesHeadNumber = ref('')
 const activeTab = ref('html')
 const renderedHtml = ref('')
 const pdfUrl = ref('')
@@ -40,6 +41,48 @@ const renderTemplate = (template, data) => {
     const value = key.split('.').reduce((obj, k) => obj?.[k], data)
     return value !== undefined ? value : match
   })
+}
+
+// Function to fetch data from salesHead endpoint
+const fetchSalesHeadData = async () => {
+  if (!salesHeadNumber.value.trim()) {
+    errorMessage.value = 'Please enter a Sales Head Number'
+    showError.value = true
+    return
+  }
+
+  try {
+    errorMessage.value = ''
+    showError.value = false
+    
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/report/pdfTest/salesHead/${salesHeadNumber.value.trim()}`
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    dataSource.value = JSON.stringify(data, null, 2)
+    
+  } catch (error) {
+    console.error('API Error:', error)
+    errorMessage.value = `Failed to fetch sales head data: ${error.message}`
+    showError.value = true
+  }
+}
+
+// Handle salesHead input keydown event
+const handleSalesHeadKeydown = (event) => {
+  if (event.key === 'Enter') {
+    fetchSalesHeadData()
+  }
 }
 
 const runPreview = async () => {
@@ -184,7 +227,18 @@ const base64ToBlob = (base64, type = '') => {
             </div>
           </div>
           <div class="editor-section">
-            <h2>Data Source</h2>
+            <div class="section-header">
+              <h2>Data Source</h2>
+              <div class="input-group">
+                <input 
+                  v-model="salesHeadNumber" 
+                  @keydown="handleSalesHeadKeydown" 
+                  placeholder="Enter Sales Head Number" 
+                  class="sales-head-input"
+                />
+                <button @click="fetchSalesHeadData" class="fetch-button">Fetch Data</button>
+              </div>
+            </div>
             <div class="editor-container">
               <MonacoEditor
                 v-model="dataSource"
@@ -368,6 +422,52 @@ body {
   border: 1px solid var(--editor-border);
   border-radius: 4px;
   min-height: 0; /* Önemli: Flex child overflow için */
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.sales-head-input {
+  width: 200px;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.fetch-button {
+  padding: 0.25rem 0.5rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.fetch-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.sales-head-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .preview-container {
